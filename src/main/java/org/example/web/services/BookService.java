@@ -22,4 +22,8 @@ public class BookService {
     public void saveBook(Book book){
         bookRepo.store(book);
     }
+
+    public boolean removeBookById(int bookIdToRemove) {
+        return bookRepo.removeBookById(bookIdToRemove);
+    }
 }

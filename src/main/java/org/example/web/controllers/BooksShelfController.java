@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping(value = "books")
+@RequestMapping(value = "/books")
 public class BooksShelfController {
     private Logger logger = Logger.getLogger(this.getClass());
     private BookService bookService;
@@ -28,5 +29,21 @@ public class BooksShelfController {
         model.addAttribute("book", new Book());
         model.addAttribute("bookList", bookService.getAllBooks());
         return "book_shelf";
+    }
+
+    @PostMapping("/save")
+    public String saveBooks(Book book){
+        bookService.saveBook(book);
+        logger.info("current repository size: " + bookService.getAllBooks().size());
+        return "redirect:/books/shelf";
+    }
+
+    @PostMapping("/remove")
+    public String removeBook(@RequestParam(value = "bookIdToRemove") int bookIdToRemove){
+        if (bookService.removeBookById(bookIdToRemove)) {
+            return "redirect:/books/shelf";
+        } else {
+            return "book_shelf";
+        }
     }
 }

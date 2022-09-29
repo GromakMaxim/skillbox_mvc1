@@ -1,7 +1,7 @@
 package org.example.web.dto;
 
 public class Book {
-    private long id;
+    private String id;
     private String author;
     private String title;
     private int size;
@@ -9,18 +9,18 @@ public class Book {
     public Book() {
     }
 
-    public Book(long id, String author, String title, int size) {
+    public Book(String id, String author, String title, int size) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.size = size;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="org.example.web"/>
-    <mvc:resources mapping="/**" location="file:"/>
+    <mvc:resources mapping="/**" location="classpath:images"/>
     <mvc:annotation-driven/>
     <!--    <mvc:default-servlet-handler/>-->
 
@@ -46,7 +46,7 @@
         <!-- HTML значение по-умолчанию, добавлено здесь ради ясности. -->
         <property name="templateMode" value="HTML" />
         <!-- Cache страниц по-умолчанию включен (значеие true).                                  -->
-        <!-- Установите false если хотите чтобы шаблоны автоматически обнолялись при изменении. -->
+        <!-- Установите false если хотите чтобы шаблоны автоматически обновлялись при изменении. -->
         <property name="cacheable" value="false" />
     </bean>
 

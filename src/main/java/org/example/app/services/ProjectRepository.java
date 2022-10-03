@@ -1,4 +1,4 @@
-package org.example.web.services;
+package org.example.app.services;
 
 import java.util.List;
 

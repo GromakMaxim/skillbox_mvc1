@@ -3,7 +3,7 @@ package org.example.web.controllers;
 import org.apache.log4j.Logger;
 import org.example.web.dto.Book;
 import org.example.web.dto.BookIdToRemove;
-import org.example.web.services.BookService;
+import org.example.app.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

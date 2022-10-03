@@ -1,4 +1,4 @@
-package org.example.web.exceptions;
+package org.example.app.exceptions;
 
 public class BookShelfLoginException extends Exception {
     private String message;

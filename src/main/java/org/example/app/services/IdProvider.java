@@ -10,8 +10,8 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class IdProvider implements InitializingBean, DisposableBean, BeanPostProcessor {
     Logger logger = Logger.getLogger(this.getClass());
 
-    public String provideId(Book book) {
-        return this.hashCode() + "_" + book.hashCode();
+    public int provideId(Book book) {
+        return book.getId();
     }
 
     private void initIdProvider() {

@@ -13,14 +13,12 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class BookRepository implements ProjectRepository<Book>, ApplicationContextAware {
     private final Logger logger = Logger.getLogger(this.getClass());
-    private ApplicationContext context;
-
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private ApplicationContext context;
 
     @Autowired
     public BookRepository(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -30,14 +28,14 @@ public class BookRepository implements ProjectRepository<Book>, ApplicationConte
     @Override
     public List<Book> retrieveAll() {
         List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rowNumber) -> {
-           Book book = new Book();
-           book.setId(rs.getInt("id"));
+            Book book = new Book();
+            book.setId(rs.getInt("id"));
             book.setAuthor(rs.getString("author"));
             book.setTitle(rs.getString("title"));
             book.setSize(rs.getInt("size"));
             return book;
         });
-        return books;
+        return new ArrayList<>(books);
     }
 
     @Override
@@ -53,17 +51,12 @@ public class BookRepository implements ProjectRepository<Book>, ApplicationConte
 
     @Override
     public boolean removeBookById(int bookIdToRemove) {
-        Optional<Book> optional = retrieveAll().stream()
-                .filter(book -> book.getId() == bookIdToRemove)
-                .findFirst();
-
-        if (optional.isPresent()) {
-            logger.info("removed: " + bookIdToRemove);
-            return true;
-        } else {
-            logger.warn("no such id: " + bookIdToRemove);
-        }
-        return false;
+        logger.info("remove book with id: " + bookIdToRemove);
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id", bookIdToRemove);
+        jdbcTemplate.update("DELETE FROM books WHERE id = :id", parameterSource);
+        logger.info("remove book completed");
+        return true;
     }
 
     @Override

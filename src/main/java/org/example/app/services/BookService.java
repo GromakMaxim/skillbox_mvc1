@@ -26,4 +26,8 @@ public class BookService {
     public boolean removeBookById(int bookIdToRemove) {
         return bookRepo.removeBookById(bookIdToRemove);
     }
+
+    public boolean removeBookById(String bookIdToRemove) {
+        return this.removeBookById(Integer.parseInt(bookIdToRemove));
+    }
 }

@@ -30,7 +30,6 @@ public class BooksShelfController {
 
     @GetMapping("/shelf")
     public String books(Model model) {
-        logger.info(this.toString());
         model.addAttribute("book", new Book());
         model.addAttribute("bookIdToRemove", new BookIdToRemove());
         model.addAttribute("bookList", bookService.getAllBooks());
@@ -54,14 +53,13 @@ public class BooksShelfController {
 
     @PostMapping("/remove")
     public String removeBook(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
-
+        logger.info("POST: /remove");
         if (bindingResult.hasErrors()) {
-            System.out.println("has errors");
             model.addAttribute("book", new Book());
             model.addAttribute("bookList", bookService.getAllBooks());
             return "book_shelf";
-
         } else {
+            bookService.removeBookById(bookIdToRemove.getId());
             return "redirect:/books/shelf";
         }
     }

@@ -50,13 +50,19 @@ public class BookRepository implements ProjectRepository<Book>, ApplicationConte
     }
 
     @Override
-    public boolean removeBookById(int bookIdToRemove) {
+    public boolean removeBookById(Integer bookIdToRemove) {
         logger.info("remove book with id: " + bookIdToRemove);
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("id", bookIdToRemove);
-        jdbcTemplate.update("DELETE FROM books WHERE id = :id", parameterSource);
-        logger.info("remove book completed");
-        return true;
+        int result = jdbcTemplate.update("DELETE FROM books WHERE id = :id", parameterSource);
+        if (result == 1){
+            logger.info("remove book completed");
+            return true;
+        }
+
+        logger.info("cant find book with id");
+        return false;
+
     }
 
     @Override

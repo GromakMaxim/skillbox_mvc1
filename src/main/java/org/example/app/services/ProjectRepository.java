@@ -7,5 +7,5 @@ public interface ProjectRepository<T> {
 
     void store(T book);
 
-    boolean removeBookById(int bookIdToRemove);
+    boolean removeBookById(Integer bookIdToRemove);
 }

@@ -55,12 +55,22 @@ public class BooksShelfController {
     public String removeBook(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
         logger.info("POST: /remove");
         if (bindingResult.hasErrors()) {
+            System.out.println("err");
             model.addAttribute("book", new Book());
             model.addAttribute("bookList", bookService.getAllBooks());
             return "book_shelf";
         } else {
-            bookService.removeBookById(bookIdToRemove.getId());
-            return "redirect:/books/shelf";
+            boolean isDeleted = bookService.removeBookById(bookIdToRemove.getId());
+            if (isDeleted) {
+                return "redirect:/books/shelf";
+            } else {
+                System.out.println("err during deleting");
+                model.addAttribute("book", new Book());
+                model.addAttribute("bookList", bookService.getAllBooks());
+                return "book_shelf";
+            }
+
+
         }
     }
 }
